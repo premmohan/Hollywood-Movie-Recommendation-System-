@@ -1,0 +1,144 @@
+import streamlit as st
+import pickle
+import joblib
+import pandas as pd
+
+# -------------------------------
+# Page Config
+# -------------------------------
+st.set_page_config(
+    page_title="Movie Recommender",
+    page_icon="🎬",
+    layout="centered"
+)
+
+# -------------------------------
+# Custom CSS (Final Styling)
+# -------------------------------
+st.markdown("""
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+html, body, [class*="css"] {
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Background */
+body {
+    background-color: #0e1117;
+    color: white;
+}
+
+/* Title (kept simple) */
+.title {
+    text-align: center;
+    font-size: 45px;
+    font-weight: 600;
+    color: #ff4b4b;
+    margin-bottom: 20px;
+}
+
+/* Selectbox Label */
+.stSelectbox label {
+    font-size: 33px !important;
+    font-weight: 600 !important;
+    color: #ffffff !important;
+}
+
+/* Dropdown text */
+div[data-baseweb="select"] > div {
+    font-size: 20px !important;
+    font-weight: 500 !important;
+}
+
+/* Button */
+.stButton>button {
+    background-color: #ff4b4b;
+    color: white;
+    border-radius: 10px;
+    height: 3.2em;
+    width: 100%;
+    font-size: 21px;
+    font-weight: 600;
+    margin-top: 10px;
+    border: none;
+}
+
+.stButton>button:hover {
+    background-color: #ff4b4b !important;
+    color: white !important;
+}
+
+.stButton>button:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+            
+
+/* Recommendation title */
+.reco-title {
+    font-size: 28px;
+    font-weight: 600;
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
+/* Movie cards */
+.movie-card {
+    background-color: #1c1f26;
+    padding: 18px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    border-left: 5px solid #ff4b4b;
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+# -------------------------------
+# Title
+# -------------------------------
+st.markdown('<p class="title">🎬 Movie Recommendation System</p>', unsafe_allow_html=True)
+
+# -------------------------------
+# Load Data
+# -------------------------------
+with open("movies.pickle", "rb") as m:
+    movies = pickle.load(m)
+
+similarity = joblib.load("similarity.joblib")
+movies_names = movies["title"].values
+
+# -------------------------------
+# Recommendation Function
+# -------------------------------
+def recommend(movie_name):
+    movie_index = movies[movies["title"] == movie_name].index[0]
+    similarity_scores = similarity[movie_index]
+
+    movies_list = sorted(
+        enumerate(similarity_scores),
+        reverse=True,
+        key=lambda x: x[1]
+    )[1:6]
+
+    return [movies.iloc[i[0]].title for i in movies_list]
+
+# -------------------------------
+# UI Input
+# -------------------------------
+selected_movie = st.selectbox("# 🎥 Choose a Movie", movies_names)
+
+# -------------------------------
+# Recommendation Button
+# -------------------------------
+if st.button("# ✨ RECOMMEND MOVIES", use_container_width=True):
+    recommendations = recommend(selected_movie)
+
+    st.markdown('<p class="reco-title">🍿 Recommended Movies</p>', unsafe_allow_html=True)
+
+    for movie in recommendations:
+        st.markdown(f'<div class="movie-card">{movie}</div>', unsafe_allow_html=True)
