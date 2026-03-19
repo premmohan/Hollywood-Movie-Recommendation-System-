@@ -23,10 +23,15 @@ html, body, [class*="css"] {
     font-family: 'Poppins', sans-serif;
 }
 
-/* Background */
-body {
-    background-color: #0e1117;
-    color: white;
+/* ✅ Hollywood Background Wallpaper */
+.stApp {
+    background-image: 
+        linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)),
+        url("https://images.unsplash.com/photo-1542204165-65bf26472b9b");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 /* Title (kept simple) */
@@ -40,7 +45,7 @@ body {
 
 /* Selectbox Label */
 .stSelectbox label {
-    font-size: 33px !important;
+    font-size: 43px !important;
     font-weight: 600 !important;
     color: #ffffff !important;
 }
@@ -73,7 +78,6 @@ div[data-baseweb="select"] > div {
     outline: none !important;
     box-shadow: none !important;
 }
-            
 
 /* Recommendation title */
 .reco-title {
@@ -81,11 +85,13 @@ div[data-baseweb="select"] > div {
     font-weight: 600;
     margin-top: 25px;
     margin-bottom: 15px;
+    color: #bbbbbb
 }
 
 /* Movie cards */
 .movie-card {
     background-color: #1c1f26;
+    color: white !important;
     padding: 18px;
     border-radius: 12px;
     margin-bottom: 12px;
@@ -95,6 +101,11 @@ div[data-baseweb="select"] > div {
     letter-spacing: 0.5px;
 }
 
+/* Fix transparent header bar */
+[data-testid="stHeader"] {
+    background: rgba(0,0,0,0) !important;
+}
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -102,6 +113,9 @@ div[data-baseweb="select"] > div {
 # Title
 # -------------------------------
 st.markdown('<p class="title">🎬 Movie Recommendation System</p>', unsafe_allow_html=True)
+st.markdown(
+    "<h4 style='text-align:center; color:#bbbbbb; font-weight:500;'>AI-powered movie recommendations in one click</h4>",
+    unsafe_allow_html=True)
 
 # -------------------------------
 # Load Data
@@ -130,12 +144,14 @@ def recommend(movie_name):
 # -------------------------------
 # UI Input
 # -------------------------------
-selected_movie = st.selectbox("# 🎥 Choose a Movie", movies_names)
+#st.subheader("🎥 Choose a Movie")
+st.markdown("<h3 style='color:#ff4b4b;'>🎥 Choose a Movie</h3>", unsafe_allow_html=True)
+selected_movie = st.selectbox("", movies_names)
 
 # -------------------------------
 # Recommendation Button
 # -------------------------------
-if st.button("# ✨ RECOMMEND MOVIES", use_container_width=True):
+if st.button(" ✨ RECOMMEND MOVIES", use_container_width=True):
     recommendations = recommend(selected_movie)
 
     st.markdown('<p class="reco-title">🍿 Recommended Movies</p>', unsafe_allow_html=True)
