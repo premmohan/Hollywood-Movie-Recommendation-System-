@@ -34,15 +34,6 @@ html, body, [class*="css"] {
     background-attachment: fixed;
 }
 
-/* Title (kept simple) */
-.title {
-    text-align: center;
-    font-size: 45px;
-    font-weight: 600;
-    color: #ff4b4b;
-    margin-bottom: 20px;
-}
-
 /* Selectbox Label */
 .stSelectbox label {
     font-size: 43px !important;
@@ -112,7 +103,8 @@ div[data-baseweb="select"] > div {
 # -------------------------------
 # Title
 # -------------------------------
-st.markdown('<p class="title">🎬 Movie Recommendation System</p>', unsafe_allow_html=True)
+
+st.markdown("<h1 style='text-align:center; color:#ff4b4b; font-size:44px; font-weight:700;'>🎬 Movie Recommendation System</h1>", unsafe_allow_html=True)
 st.markdown(
     "<h4 style='text-align:center; color:#bbbbbb; font-weight:500;'>AI-powered movie recommendations in one click</h4>",
     unsafe_allow_html=True)
@@ -145,7 +137,7 @@ def recommend(movie_name):
 # UI Input
 # -------------------------------
 #st.subheader("🎥 Choose a Movie")
-st.markdown("<h3 style='color:#ff4b4b;'>🎥 Choose a Movie</h3>", unsafe_allow_html=True)
+st.markdown("<h3 style='color:#bbbbbb; font-size:27px;'>🎥 Choose a Movie</h3>", unsafe_allow_html=True)
 selected_movie = st.selectbox("", movies_names)
 
 # -------------------------------
@@ -154,7 +146,6 @@ selected_movie = st.selectbox("", movies_names)
 if st.button(" ✨ RECOMMEND MOVIES", use_container_width=True):
     recommendations = recommend(selected_movie)
 
-    st.markdown('<p class="reco-title">🍿 Recommended Movies</p>', unsafe_allow_html=True)
-
+    st.markdown("<h3 style='color:#bbbbbb; font-size:27px; font-weight:700;'>🍿 Recommended Movies</h3>", unsafe_allow_html=True)
     for movie in recommendations:
         st.markdown(f'<div class="movie-card">{movie}</div>', unsafe_allow_html=True)
