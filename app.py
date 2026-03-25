@@ -153,6 +153,6 @@ if st.button(" ✨ RECOMMEND MOVIES", use_container_width=True):
 # Footer
 st.markdown("---")
 st.markdown(
-    "<p style='color:#bbbbbb; style='text-align: center;'>Built by PREM MOHAN</p>",
+    "<p style="color:#bbbbbb; text-align: center;">Built by PREM MOHAN</p>",
     unsafe_allow_html=True
 )
