@@ -149,3 +149,10 @@ if st.button(" ✨ RECOMMEND MOVIES", use_container_width=True):
     st.markdown("<h3 style='color:#bbbbbb; font-size:27px; font-weight:700;'>🍿 Recommended Movies</h3>", unsafe_allow_html=True)
     for movie in recommendations:
         st.markdown(f'<div class="movie-card">{movie}</div>', unsafe_allow_html=True)
+
+# Footer
+st.markdown("---")
+st.markdown(
+    "<p style='text-align: center;'>Built by PREM MOHAN</p>",
+    unsafe_allow_html=True
+)
